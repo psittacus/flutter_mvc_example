@@ -1,4 +1,4 @@
-import 'package:mvc_example/main.dart';
+import 'package:mvc_example/View.dart';
 
 class ExampleObserver {
   late ViewStatefulState exampleSubject;

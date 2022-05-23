@@ -1,6 +1,6 @@
 import 'package:mvc_example/ExampleObserver.dart';
 import 'package:mvc_example/Model.dart';
-import 'package:mvc_example/main.dart';
+import 'package:mvc_example/View.dart';
 
 class Controller implements ExampleObserver {
 
