@@ -2,15 +2,61 @@
 
 A MVC example
 
-## Getting Started
+```plantuml
+@startuml
+interface ExampleObserver 
+ExampleObserver : ViewStatefulState exampleSubject
+ExampleObserver : update(): void
 
-This project is a starting point for a Flutter application.
+interface ExampleSubject
+ExampleSubject : List<ExampleObserver> observerCollection
+ExampleSubject : register(ExampleObserver exampleObserver): void
+ExampleSubject : remove(ExampleObserver exampleObserver): void
+ExampleSubject : notifyAll(): void
 
-A few resources to get you started if this is your first Flutter project:
+class Model
+Model : int counter
+Model : calculateCounter: Future<int>
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+class Controller
+Controller : Model _model
+Controller : ViewStatefulState exampleSubject
+Controller : update(): void
+Controller : getViewStatefulState(): ViewStatefulState
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+class View 
+View : build() Widget
+
+class ViewStateful
+ViewStateful : String title
+ViewStateful : Controller controller
+ViewStateful : createState(): State<ViewStateful>
+
+class ViewStatefulState
+ViewStatefulState : int _counter
+ViewStatefulState : List<ExampleObserver> observerCollection
+ViewStatefulState : initState(): void
+ViewStatefulState : build(BuildContext context): Widget
+ViewStatefulState : notfiyAll(): void
+ViewStatefulState : register(ExampleObserver exampleObserver): void
+ViewStatefulState : remove(ExampleObserver exampleObserver): void
+ViewStatefulState : setCounter(int counter): void
+
+ViewStateful --> Controller
+
+Controller --> Model
+Controller --> ViewStatefulState
+
+View --> ViewStateful
+
+ExampleObserver --> ViewStatefulState
+
+ExampleSubject --> ExampleObserver
+
+State <|-- ViewStatefulState
+ExampleSubject <|-- ViewStatefulState
+StatefulWidget <|-- ViewStateful
+StatelessWidget <|-- View
+ExampleObserver <|-- Controller
+@enduml
+```
